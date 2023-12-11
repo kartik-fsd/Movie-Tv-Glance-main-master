@@ -1,83 +1,61 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { BottomNavigation, BottomNavigationAction, Paper, createTheme } from "@mui/material";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import MovieIcon from "@mui/icons-material/Movie";
+import TvIcon from "@mui/icons-material/Tv";
+import SearchIcon from "@mui/icons-material/Search";
+import { ThemeProvider } from "@emotion/react";
 
-function BottomNavigation() {
-  const [activeLink, setActiveLink] = useState(null);
+function CustomBottomNavigation() {
+  const location = useLocation();
 
-  const handleClick = (e) => {
-    setActiveLink(e.target.innerText);
+  const isActiveLink = (path) => {
+    return location.pathname === path;
   };
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
+
+
   return (
-    <nav
-      className="navbar fixed-bottom navbar-expand-lg bg-dark"
-      data-bs-theme="dark"
-    >
-      <div className="container-fluid">
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarTogglerDemo02"
-          aria-controls="navbarTogglerDemo02"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div
-          className="collapse navbar-collapse justify-content-center"
-          id="navbarTogglerDemo02"
-        >
-          <ul className="navbar-nav mb-2 mb-lg-0 ">
-            <li className="nav-item">
-              <Link
-                className={`nav-link ${
-                  activeLink === "Trending" ? 'active aria-current="page"' : ""
-                }`}
-                onClick={handleClick}
-                to="/"
-              >
-                Trending
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className={`nav-link ${
-                  activeLink === "Movies" ? 'active aria-current="page"' : ""
-                }`}
-                onClick={handleClick}
-                to="/Movies"
-              >
-                Movie
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className={`nav-link ${
-                  activeLink === "Tv Series" ? 'active aria-current="page"' : ""
-                }`}
-                onClick={handleClick}
-                to="/Tv Series"
-              >
-                Tv Series
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className={`nav-link ${
-                  activeLink === "Search" ? 'active aria-current="page"' : ""
-                }`}
-                onClick={handleClick}
-                to="/Search"
-              >
-                Search
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <ThemeProvider theme={darkTheme}>
+    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+    <BottomNavigation showLabels sx={{bgcolor:""}}>
+      <BottomNavigationAction
+        component={Link}
+        to="/"
+        label="Trending"
+        icon={<TrendingUpIcon />}
+        selected={isActiveLink("/")}
+      />
+      <BottomNavigationAction
+        component={Link}
+        to="/Movies"
+        label="Movie"
+        icon={<MovieIcon />}
+        selected={isActiveLink("/Movies")}
+      />
+      <BottomNavigationAction
+        component={Link}
+        to="/Tv Series"
+        label="TV Series"
+        icon={<TvIcon />}
+        selected={isActiveLink("/Tv Series")}
+      />
+      <BottomNavigationAction
+        component={Link}
+        to="/Search"
+        label="Search"
+        icon={<SearchIcon />}
+        selected={isActiveLink("/Search")}
+      />
+    </BottomNavigation>
+    </Paper>
+    </ThemeProvider>
   );
 }
 
-export default BottomNavigation;
+export default CustomBottomNavigation;
