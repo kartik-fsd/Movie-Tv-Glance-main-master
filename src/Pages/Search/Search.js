@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextField, CircularProgress } from "@mui/material";
+import { TextField } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
@@ -7,6 +7,8 @@ import { Tab, Tabs } from "@mui/material";
 import axios from "axios";
 import CustomPagination from "../../Component/pagination";
 import SingleComponent from "../../Component/SingleComponent/SingleComponent";
+import useLoading from "../../loading/Useloader";
+import Loader from "../../loading/loader";
 
 const darkTheme = createTheme({
   palette: {
@@ -23,12 +25,12 @@ const Search = () => {
   const [searchText, setSearchText] = useState("");
   const [content, setContent] = useState([]);
   const [numOfPages, setNumOfPages] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const { loading, showLoading, hideLoading } = useLoading();
 
   const fetchSearch = async () => {
     if (searchText.trim() === '') return;
 
-    setLoading(true);
+    showLoading(true);
     try {
       const { data } = await axios.get(
         `https://api.themoviedb.org/3/search/${type ? "tv" : "movie"}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=${searchText}&page=${page}`
@@ -39,7 +41,7 @@ const Search = () => {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      hideLoading(false);
     }
   };
 
@@ -85,7 +87,7 @@ const Search = () => {
       </Tabs>
       <div className="trending">
         {loading ? (
-          <CircularProgress /> // Show loading indicator while fetching data
+          <Loader />  // Show loading indicator while fetching data
         ) : content.length === 0 && searchText !== "" ? (
           <h2>{type ? "No Series Found" : "No Movies Found"}</h2>
         ) : (

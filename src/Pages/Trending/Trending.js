@@ -4,18 +4,25 @@ import { useEffect, useState } from "react";
 import SingleComponent from "../../Component/SingleComponent/SingleComponent";
 import "./Trending.css";
 import CustomPagination from "../../Component/pagination";
+import useLoading from "../../loading/Useloader";
+import Loader from "../../loading/loader";
 
 function Trending() {
   const [page, setPage] = useState(1);
   const [content, setContent] = useState([]);
+  const { loading, showLoading, hideLoading } = useLoading();
   const url = `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`;
   useEffect(() => {
+    showLoading(true)
     const getTrending = async () => {
       try {
         const { data } = await axios.get(url);
         setContent(data.results);
       } catch (error) {
         console.error(error);
+      }
+      finally{
+        hideLoading(false)
       }
     };
     getTrending();
@@ -27,7 +34,10 @@ function Trending() {
     <>
       <span className="pageTitle">Trending Movies and Tv Series</span>
       <div className="trending">
-        {content &&
+      {loading ? ( // Display loading indicator if loading is true
+            <Loader/> 
+        ) : (
+        content &&
           content.map((c) => (
             <SingleComponent
               key={c.id}
@@ -38,7 +48,8 @@ function Trending() {
               ratings={c.vote_average}
               poster={c.poster_path}
             />
-          ))}
+          ))
+        )}
       </div>
       <CustomPagination setPage={setPage} />
     </>

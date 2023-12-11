@@ -1,26 +1,10 @@
-.ContentModal__landscape {
-    object-fit: contain;
-    border-radius: 10px;
-  }
-  
-  .ContentModal__portrait {
-    display: none;
-    object-fit: contain;
-    border-radius: 10px;
-  }
-  
-  .tagline {
-    padding-bottom: 10px;
-    align-self: center;
-  }
-  
   .ContentModal {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-width: none;
   }
   
@@ -29,23 +13,22 @@
   }
   
   .ContentModal__about {
+    flex: 1;
     padding: 10px;
-    width: 95%;
-    height: 90%;
-    display: flex;
-    flex-direction: column;
     font-family: "Roboto", sans-serif;
-    justify-content: space-evenly;
     font-weight: 300;
   }
   
   .ContentModal__title {
-    height: 13%;
     font-size: 4vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
+    margin: 0;
+    padding: 15px 0;
+  }
   
+  .tagline {
+    padding-bottom: 10px;
+    text-align: center;
   }
   
   .ContentModal__description {
@@ -63,28 +46,53 @@
     display: none;
   }
   
+  .ContentModal__landscape {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  
+  .ContentModal__portrait {
+    display: none;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
   @media (min-width: 835px) {
     .ContentModal__landscape {
       display: none;
     }
+  
     .ContentModal__portrait {
-      display: flex;
+      display: block;
       width: 38%;
+      max-width: 38%;
     }
+  
     .ContentModal {
       flex-direction: row;
-      justify-content: space-around;
       padding: 10px 0;
+      align-items: center;
     }
+  
     .ContentModal__about {
       width: 58%;
-      padding: 0;
-      height: 100%;
+      padding: 0 20px;
     }
+  
     .ContentModal__title {
       font-size: 3.5vw;
+      text-align: left;
+      padding: 0;
     }
+  
     .ContentModal__description {
-      font-size: 22px;
+      font-size: 18px;
     }
   }
+  

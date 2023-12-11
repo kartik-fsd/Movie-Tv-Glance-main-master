@@ -10,7 +10,6 @@ import "./modal.css";
 import Carousel from "../Component/carousel/carousel";
 import { createTheme } from "@mui/material/styles";
 import { img_500, unavailable, unavailableLandscape } from "../config/config";
-//import { spacing } from "@mui/system";
 
 const theme = createTheme();
 const style = {
@@ -138,6 +137,7 @@ export default function TModal(props) {
                     color="secondary"
                     target="__blank"
                     href={`https://www.youtube.com/watch?v=${video}`}
+                    sx={{display:"flex" ,alignItems:'center' }}
                   >
                     Watch the Trailer
                   </Button>
